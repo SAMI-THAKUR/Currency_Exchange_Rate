@@ -9,7 +9,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: 30px;
+  margin-top: 10px;
 }
 
 .money_paper {
@@ -82,28 +82,33 @@
   margin-bottom: 0px;
   margin-top: 0px;
   font-family: "Kdam Thmor Pro", sans-serif;
+  font-size: clmap(18px, 5vw, 50px);
 }
 .inputBox h3 {
-  font-size: 17px;
+  font-size: clamp(15px, 3vw, 21px);
   margin-bottom: 0px;
   margin-top: 0px;
   font-family: monospace;
   color: var(--note-green2);
 }
 
-.inputBox Flag {
+.inputBox .Flag {
   margin-left: 0px;
+  width: clamp(60px, 5vw, 80px);
+  height: clamp(30px, 5vw, 40px);
+  margin: 0px;
+  padding: 0px;
 }
 
 select {
   padding-left: 10px;
   padding-right: 50px;
   width: clamp(200px, 50vw, 300px);
-  height: 50px;
+  height: clamp(30px, 5vw, 50px);
   background-color: var(--note-green2);
   color: black;
   font-family: "Kdam Thmor Pro", sans-serif;
-  font-size: 21px;
+  font-size: clamp(15px, 3vw, 21px);
 }
 select option {
   display: flex;
@@ -112,7 +117,7 @@ select option {
 }
 
 input {
-  height: 30px;
+  height: clamp(30px, 5vw, 50px);
   background-color: #a9a9a9;
   color: black;
   font-family: "Courier New", Courier, monospace;

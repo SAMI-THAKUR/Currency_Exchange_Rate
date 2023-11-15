@@ -25,7 +25,7 @@
   align-self: center;
   margin-left: 5px;
   margin-bottom: 5px;
-  font-size: 25px;
+  font-size: clamp(20px, 5vw, 30px);
 }
 
 @media (max-width: 768px) {

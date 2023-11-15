@@ -23,10 +23,9 @@ const Card = (p) => {
       </h3>
       <h2>{flag}</h2>
       <Flag
+        className="Flag"
         code={flag.toLowerCase()}
         fallback={<span>Unknown</span>}
-        height={40}
-        width={80}
       />
       <select
         name="currency"
