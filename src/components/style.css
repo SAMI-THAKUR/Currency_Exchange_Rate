@@ -107,13 +107,14 @@ select {
   height: clamp(30px, 5vw, 50px);
   background-color: var(--note-green2);
   color: black;
-  font-family: "Kdam Thmor Pro", sans-serif;
+  font-family: monospace;
   font-size: clamp(15px, 3vw, 21px);
 }
 select option {
   display: flex;
   gap: 20px;
-  font-family: "Kdam Thmor Pro", sans-serif;
+  font-family: monospace;
+  width: 200px;
 }
 
 input {

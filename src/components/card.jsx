@@ -1,5 +1,7 @@
 import Flag from "react-world-flags";
-import codeToCountry from "./data";
+import codeToCountry from "./CoutryCode";
+import codeToCountryWithCurrencyNames from "./CurrencyName.js";
+import codeToCountryNames from "./CountryName.js";
 
 const Card = (p) => {
   const {
@@ -10,23 +12,23 @@ const Card = (p) => {
     onAmountChange,
     onCurrencyChange,
     disabledin = false,
-    money,
   } = p;
   let flag = codeToCountry[selected.toUpperCase()];
+  let currency = codeToCountryWithCurrencyNames[selected.toUpperCase()];
   return (
     <div className="inputBox">
       <h3>
         {name} {selected.toUpperCase()}
         <br />
-        {money}
+        {currency}
         <br />
       </h3>
-      <h2>{flag}</h2>
       <Flag
         className="Flag"
         code={flag.toLowerCase()}
         fallback={<span>Unknown</span>}
       />
+      <h2>{flag}</h2>
       <select
         name="currency"
         id=""
@@ -37,7 +39,7 @@ const Card = (p) => {
       >
         {options.map((option) => (
           <option key={option} value={option.toLowerCase()}>
-            {option}
+            {option} {codeToCountryNames[option.toUpperCase()]}
           </option>
         ))}
       </select>

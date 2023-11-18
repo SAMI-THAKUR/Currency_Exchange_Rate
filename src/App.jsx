@@ -3,7 +3,7 @@ import "./App.css";
 import UseInfo from "./hooks/useinfo";
 import useName from "./hooks/useName";
 import { useEffect, useState } from "react";
-import codeToCountry from "./components/data";
+import codeToCountry from "./components/CoutryCode.js";
 
 function App() {
   const [amount, setAmount] = useState();
@@ -40,7 +40,6 @@ function App() {
           selected={from}
           onAmountChange={(amount) => setAmount(amount)}
           onCurrencyChange={(currency) => setFrom(currency)}
-          money={fromMoney}
         ></Card>
         <button onClick={swap}>
           <i className="fa-solid fa-right-left"></i>
@@ -55,7 +54,6 @@ function App() {
             setTo(currency);
           }}
           disabledin={true}
-          money={toMoney}
         ></Card>
       </div>
     </>
