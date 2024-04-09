@@ -1,60 +1,46 @@
 import { Note, Card } from "./components/";
 import "./App.css";
 import UseInfo from "./hooks/useinfo";
-import useName from "./hooks/useName";
-import { useEffect, useState } from "react";
-import codeToCountry from "./components/CoutryCode.js";
+import { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import codeToCountry from "./data/CoutryCode.js";
+import { setCA } from "./features/currency.js";
+import { setFrom, setTo } from "./features/currency.js";
 
 function App() {
-  const [amount, setAmount] = useState();
-  const [from, setFrom] = useState("usd");
-  const [to, setTo] = useState("inr");
-  const [convertedAmount, setConvertedAmount] = useState(0);
-  const currencyInfo = UseInfo(from);
+  const dispatch = useDispatch();
+  const amount = useSelector((state) => state.currency.amount);
+  const base = useSelector((state) => state.currency.base);
+  const target = useSelector((state) => state.currency.target);
+  const currencyInfo = UseInfo(base);
   const option = Object.keys(codeToCountry);
 
   const swap = () => {
-    setFrom(to);
-    setTo(from);
+    let temp = base;
+    dispatch(setFrom(target));
+    dispatch(setTo(temp));
   };
 
   const convert = () => {
-    setConvertedAmount(amount * currencyInfo[to.toLowerCase()]);
+    if (currencyInfo[target]) {
+      let rate = currencyInfo[target];
+      let result = amount * rate;
+      dispatch(setCA(result));
+    }
   };
 
   //----------------- Hooks-------------------------- //
-  useEffect(convert, [from, to, amount, currencyInfo]);
-  const toMoney = useName(to);
-  const fromMoney = useName(from);
-  // const PastData = usePast(from, to);
-  // console.log(PastData);
+  useEffect(convert, [amount, currencyInfo, target, base]);
 
   return (
     <>
       <Note />
       <div className="Box">
-        <Card
-          name="From"
-          amount={amount}
-          options={option}
-          selected={from}
-          onAmountChange={(amount) => setAmount(amount)}
-          onCurrencyChange={(currency) => setFrom(currency)}
-        ></Card>
+        <Card name="From" options={option}></Card>
         <button onClick={swap}>
           <i className="fa-solid fa-right-left"></i>
         </button>
-        <Card
-          name="To"
-          amount={convertedAmount}
-          options={option}
-          selected={to}
-          onAmountChange={(amount) => setAmount(amount)}
-          onCurrencyChange={(currency) => {
-            setTo(currency);
-          }}
-          disabledin={true}
-        ></Card>
+        <Card name="To" options={option} disabledin={true}></Card>
       </div>
     </>
   );

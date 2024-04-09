@@ -1,20 +1,23 @@
 import Flag from "react-world-flags";
-import codeToCountry from "./CoutryCode";
-import codeToCountryWithCurrencyNames from "./CurrencyName.js";
-import codeToCountryNames from "./CountryName.js";
+import codeToCountry from "../data/CoutryCode.js";
+import codeToCountryWithCurrencyNames from "../data/CurrencyName.js";
+import codeToCountryNames from "../data/CountryName.js";
+import { useSelector, useDispatch } from "react-redux";
+import { setAmount, setFrom, setTo } from "../features/currency.js";
 
 const Card = (p) => {
-  const {
-    name,
-    amount,
-    options = [],
-    selected = "usd",
-    onAmountChange,
-    onCurrencyChange,
-    disabledin = false,
-  } = p;
+  const dispatch = useDispatch();
+  const { name, options = [], disabledin = false } = p;
+
+  // redux //
+  let selected = disabledin
+    ? useSelector((state) => state.currency.target)
+    : useSelector((state) => state.currency.base);
+
   let flag = codeToCountry[selected.toUpperCase()];
-  let currency = codeToCountryWithCurrencyNames[selected.toUpperCase()];
+  let currency =
+    codeToCountryWithCurrencyNames[selected.toUpperCase()];
+
   return (
     <div className="inputBox">
       <h3>
@@ -32,13 +35,15 @@ const Card = (p) => {
       <select
         name="currency"
         id=""
-        value={selected}
+        value={selected.toUpperCase()}
         onChange={(e) => {
-          onCurrencyChange && onCurrencyChange(e.target.value);
+          disabledin
+            ? dispatch(setTo(e.target.value))
+            : dispatch(setFrom(e.target.value));
         }}
       >
         {options.map((option) => (
-          <option key={option} value={option.toLowerCase()}>
+          <option key={option} value={option.toUpperCase()}>
             {option} {codeToCountryNames[option.toUpperCase()]}
           </option>
         ))}
@@ -51,9 +56,13 @@ const Card = (p) => {
         name=""
         id="amnt"
         placeholder="Enter Amount"
-        value={amount}
+        value={
+          disabledin
+            ? useSelector((state) => state.currency.convertedAmount)
+            : useSelector((state) => state.currency.amount)
+        }
         onChange={(e) => {
-          onAmountChange && onAmountChange(e.target.value);
+          dispatch(setAmount(e.target.value));
         }}
       />
     </div>
